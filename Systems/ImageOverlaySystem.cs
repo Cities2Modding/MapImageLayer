@@ -124,6 +124,36 @@ namespace MapImageLayer.Systems
                     ReloadImage( );
             };
             inputAction.Enable( );
+            
+            inputAction = new InputAction( "ImageOverlayMoveLeft" );
+            inputAction.AddCompositeBinding( "ButtonWithOneModifier" )
+                .With( "Modifier", "<Keyboard>/ctrl" )
+                .With( "Button", "<Keyboard>/leftArrow" );
+            inputAction.performed += OnImageOverlayMoveLeft;
+            inputAction.Enable();
+
+            inputAction = new InputAction( "ImageOverlayMoveRight" );
+            inputAction.AddCompositeBinding( "ButtonWithOneModifier" )
+                .With( "Modifier", "<Keyboard>/ctrl" )
+                .With( "Button", "<Keyboard>/rightArrow" );
+            inputAction.performed += OnImageOverlayMoveRight;
+            inputAction.Enable();
+
+
+            inputAction = new InputAction( "ImageOverlayMoveForward" );
+            inputAction.AddCompositeBinding( "ButtonWithOneModifier" )
+                .With( "Modifier", "<Keyboard>/ctrl" )
+                .With( "Button", "<Keyboard>/upArrow" );
+            inputAction.performed += OnImageOverlayMoveForward;
+            inputAction.Enable();
+
+
+            inputAction = new InputAction( "ImageOverlayMoveBackward" );
+            inputAction.AddCompositeBinding( "ButtonWithOneModifier" )
+                .With( "Modifier", "<Keyboard>/ctrl" )
+                .With( "Button", "<Keyboard>/downArrow" );
+            inputAction.performed += OnImageOverlayMoveBackward;
+            inputAction.Enable();
         }
 
         private void ChooseInputFile()
@@ -325,6 +355,62 @@ namespace MapImageLayer.Systems
             AudioManager.instance.PlayUISound( soundSettings.m_AreaMarqueeEndSound );
 
             _config.Opacity = ( decimal ) transparency;
+            MapImageLayerConfig.Save( _config );
+        }
+
+        private void OnImageOverlayMoveLeft( InputAction.CallbackContext obj )
+        {
+            if ( !ShowImageOverlay || imageOverlayObj == null )
+                return;
+
+            imageOverlayObj.transform.position -= Vector3.right * (float)_config.Speed;
+            AudioManager.instance.PlayUISound( soundSettings.m_TransportLineStartSound );
+
+            _config.X = ( decimal ) imageOverlayObj.transform.position.x;
+            _config.Y = ( decimal ) imageOverlayObj.transform.position.y;
+            _config.Z = ( decimal ) imageOverlayObj.transform.position.z;
+            MapImageLayerConfig.Save( _config );
+        }
+
+        private void OnImageOverlayMoveRight( InputAction.CallbackContext obj )
+        {
+            if ( !ShowImageOverlay || imageOverlayObj == null )
+                return;
+
+            imageOverlayObj.transform.position += Vector3.right * (float)_config.Speed;
+            AudioManager.instance.PlayUISound( soundSettings.m_PolygonToolDropPointSound );
+
+            _config.X = ( decimal ) imageOverlayObj.transform.position.x;
+            _config.Y = ( decimal ) imageOverlayObj.transform.position.y;
+            _config.Z = ( decimal ) imageOverlayObj.transform.position.z;
+            MapImageLayerConfig.Save( _config );
+        }
+
+        private void OnImageOverlayMoveForward( InputAction.CallbackContext obj )
+        {
+            if ( !ShowImageOverlay || imageOverlayObj == null )
+                return;
+
+            imageOverlayObj.transform.position += Vector3.forward * (float)_config.Speed;
+            AudioManager.instance.PlayUISound( soundSettings.m_AreaMarqueeEndSound );
+
+            _config.X = ( decimal ) imageOverlayObj.transform.position.x;
+            _config.Y = ( decimal ) imageOverlayObj.transform.position.y;
+            _config.Z = ( decimal ) imageOverlayObj.transform.position.z;
+            MapImageLayerConfig.Save( _config );
+        }
+
+        private void OnImageOverlayMoveBackward( InputAction.CallbackContext obj )
+        {
+            if ( !ShowImageOverlay || imageOverlayObj == null )
+                return;
+
+            imageOverlayObj.transform.position -= Vector3.forward * (float)_config.Speed;
+            AudioManager.instance.PlayUISound( soundSettings.m_TransportLineCompleteSound );
+
+            _config.X = ( decimal ) imageOverlayObj.transform.position.x;
+            _config.Y = ( decimal ) imageOverlayObj.transform.position.y;
+            _config.Z = ( decimal ) imageOverlayObj.transform.position.z;
             MapImageLayerConfig.Save( _config );
         }
 
