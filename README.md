@@ -30,6 +30,7 @@ To make your city planning more efficient, MapImageLayer offers these handy keyb
 - **(ALT + =)** Increase opacity of overlay
 - **(ALT + -)** Decrease opacity of overlay
 - **(ALT + I)** Force open image file selection dialog
+- **(CTRL + Arrows)** Move the overlay
 
 ## Image Requirements
 

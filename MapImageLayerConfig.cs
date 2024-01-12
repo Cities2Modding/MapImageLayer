@@ -48,6 +48,12 @@ namespace MapImageLayer
             set;
         } = 1m;
 
+        public decimal Speed
+        {
+            get;
+            set;
+        } = 50m;
+
         public void SetPosition( Vector3 position )
         {
             X = ( decimal ) position.x; 
